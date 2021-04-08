@@ -1,0 +1,86 @@
+﻿@model WebNHATHUOC1.Models.HOADON
+
+@{
+    ViewBag.Title = "detailHD";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<h2>Form Hóa Đơn</h2>
+
+<div>
+    <h4>Thông tin hóa đơn</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sohd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sohd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KHACHHANG.tenkh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KHACHHANG.tenkh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NHANVIEN.tennv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NHANVIEN.tennv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ngaylap)
+        </dt>
+
+        <dd>
+            @{ 
+                string ngaylap = Model.ngaylap.ToShortDateString();
+            }
+            @Html.DisplayName(ngaylap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.thanhtien)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.thanhtien)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <h4>Chi tiết hóa đơn</h4>
+    <hr />
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>@Html.DisplayName("Mã thuốc")</th>
+            <th>@Html.DisplayName("Đơn vị tính")</th>
+            <th>@Html.DisplayName("Đơn giá")</th>
+            <th>@Html.DisplayName("Số lượng")</th>
+            <th>@Html.DisplayName("Thành tiền")</th>
+        </tr>
+        @foreach (var item in ViewBag.DSCTHD as List<WebNHATHUOC1.Models.CHITIETHOADON>)
+        {
+            <tr>
+                <td>@item.mathuoc</td>
+                <td>@item.donvitinh</td>
+                <td>@item.dongia</td>
+                <td>
+                    @item.soluong
+                </td>
+                <td>@item.thanhtien</td>
+            </tr>
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,130 @@
+﻿@model WebNHATHUOC1.Models.THUOC
+
+@{
+    ViewBag.Title = "FormDelThuoc";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<h2>Form xóa Thuốc</h2>
+
+<h3>Xóa thuốc này cùng với tất cả chi tiết hóa đơn đi kèm?</h3>
+<div>
+    <h4>THUOC</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NHACUNGCAP.tenncc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NHACUNGCAP.tenncc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenthuoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenthuoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hansd)
+        </dt>
+
+        <dd>
+            @{
+                string hansd = Model.hansd.ToShortDateString();
+            }
+            @hansd
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.donvitinh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.donvitinh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dongia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dongia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hethan)
+        </dt>
+
+        <dd>
+            @{
+                if (Model.hethan == true)
+                {
+                    <p>Đã hết hạn</p>
+                }
+                else
+                {
+                    <p>Còn hạn sử dụng</p>
+                }
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mota)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mota)
+        </dd>
+
+    </dl>
+
+    <br />
+    <h4>Danh sách chi tiết hóa đơn</h4>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Số hóa đơn")
+            </th>
+            <th>
+                @Html.DisplayName("Đơn giá")
+            </th>
+            <th>
+                @Html.DisplayName("Số lượng")
+            </th>
+            <th>
+                @Html.DisplayName("Thành tiền")
+            </th>
+            <th></th>
+        </tr>
+
+        @if (ViewBag.DSHD as List<WebNHATHUOC1.Models.CHITIETHOADON> != null)
+        {
+            foreach (var item in ViewBag.DSHD as List<WebNHATHUOC1.Models.CHITIETHOADON>)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.sohd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dongia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.soluong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.thanhtien)
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <h4 class="text-danger">Tất cả chi tiết hóa đơn sẽ bị xóa, xác nhận?</h4>
+    <div class="form-actions no-color">
+        @Html.ActionLink("Xác nhận", "delThuoc", new { Model.mathuoc }, new { @class = "btn btn-danger" }) |
+        @Html.ActionLink("Trở về", "Index")
+    </div>
+</div>

@@ -1,0 +1,133 @@
+﻿@model IEnumerable<WebNHATHUOC1.Models.THUOC>
+
+<style>
+    th {
+        cursor: pointer;
+    }
+</style>
+<h2>Danh sách thuốc</h2>
+<table class="table table-bordered table-striped" id="myTable1">
+    <tr>
+        <th onclick="sortTable(0)">
+            @Html.DisplayNameFor(model => model.NHACUNGCAP.tenncc)
+        </th>
+        <th onclick="sortTable(1)">
+            @Html.DisplayNameFor(model => model.tenthuoc)
+        </th>
+        <th onclick="sortTable(2)">
+            @Html.DisplayNameFor(model => model.hansd)
+        </th>
+        <th onclick="sortTable(3)">
+            @Html.DisplayNameFor(model => model.donvitinh)
+        </th>
+        <th onclick="sortTable(4)">
+            @Html.DisplayNameFor(model => model.dongia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hethan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mota)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NHACUNGCAP.tenncc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tenthuoc)
+        </td>
+        <td>
+            @{ 
+                string hansd = item.hansd.ToShortDateString();
+            }
+            @Html.DisplayName(hansd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.donvitinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dongia)
+        </td>
+        <td>
+            @{
+                string hethan = "";
+                if (item.hethan == true)
+                {
+                    hethan = "Đã hết hạn";
+                }
+                else
+                {
+                    hethan = "Còn hạn sử dụng";
+                }
+            }
+            @Html.DisplayName(hethan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mota)
+        </td>
+        <td>
+            @Html.ActionLink("Thêm", "addThuoc", new { item.mathuoc})
+        </td>
+    </tr>
+}
+
+</table>
+<script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("myTable1");
+            switching = true;
+            // Set the sorting direction to ascending:
+            dir = "asc";
+            /* Make a loop that will continue until
+            no switching has been done: */
+            while (switching) {
+                // Start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /* Loop through all table rows (except the
+                first, which contains table headers): */
+                for (i = 1; i < (rows.length - 1); i++) {
+                    // Start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /* Get the two elements you want to compare,
+                    one from current row and one from the next: */
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    /* Check if the two rows should switch place,
+                    based on the direction, asc or desc: */
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /* If a switch has been marked, make the switch
+                    and mark that a switch has been done: */
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    // Each time a switch is done, increase this count by 1:
+                    switchcount++;
+                } else {
+                    /* If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again. */
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+</script>
